@@ -4,8 +4,8 @@ FROM		debian:bookworm
 
 #---- installation basics ------------------------------------------------------#
 
-RUN			apt update -y && \
-			apt upgrade -y && \
+RUN			apt-get update -y && \
+			apt-get upgrade -y && \
 			apt-get install mariadb-server -y
 
 #---- stockage config ----------------------------------------------------------#
