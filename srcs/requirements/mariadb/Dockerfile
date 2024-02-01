@@ -1,19 +1,19 @@
-#---- os -----------------------------------------------------------------------#
+#---- os ----------------------------------------------------------------------#
 
-FROM		debian:bookworm
+FROM        debian:bookworm
 
-#---- installation basics ------------------------------------------------------#
+#---- installation basics -----------------------------------------------------#
 
-RUN			apt-get update -y && \
-			apt-get upgrade -y && \
-			apt-get install mariadb-server -y
+RUN         apt-get update -y && \
+            apt-get upgrade -y && \
+            apt-get install mariadb-server -y
 
-#---- stockage config ----------------------------------------------------------#
+#---- stockage config ---------------------------------------------------------#
 
-COPY		conf/mariadb.conf /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY		tools/script.sh /etc/mysql/script.sh
+COPY        conf/mariadb.conf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY        tools/script.sh /etc/mysql/script.sh
 
-#---- script config ------------------------------------------------------------#
+#---- script config -----------------------------------------------------------#
 
-RUN			chmod +x /etc/mysql/script.sh
-ENTRYPOINT	[ "sh", "etc/mysql/script.sh" ]
+RUN         chmod +x /etc/mysql/script.sh
+ENTRYPOINT  [ "sh", "etc/mysql/script.sh" ]

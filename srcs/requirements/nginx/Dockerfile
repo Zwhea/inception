@@ -12,10 +12,10 @@ RUN			apt-get update -y && \
 
 RUN			mkdir -p /etc/nginx/ssl
 RUN			apt-get install openssl -y
-RUN			openssl req -x509 -nodes												\
-				-out /etc/nginx/ssl/inception.crt									\
-				-keyout /etc/nginx/ssl/inception.key								\
-				-subj "/C=FR/L=Lyon/O=42/CN=twang.42.fr/UID=twang"
+RUN			openssl req -x509 -nodes										\
+				-out /etc/nginx/ssl/certificate.crt							\
+				-keyout /etc/nginx/ssl/certificate_key.key					\
+				-subj "/C=FR/L=Lyon/CN=twang.42.fr/UID=twang"
 
 #---- stockage config ----------------------------------------------------------#
 

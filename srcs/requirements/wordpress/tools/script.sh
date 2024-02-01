@@ -1,18 +1,27 @@
 # sleep 10
 
-wp core download	--path=wordpress
-cd wordpress
-wp config create	--allow-root \
+mkdir -p /var/www/wordpress
+wget https://github.com/wp-cli/wp-cli-bundle/releases/download/v2.7.0/wp-cli-2.7.0.phar
+chmod +x wp-cli-2.7.0.phar
+mv wp-cli-2.7.0.phar /usr/local/bin/wp
+
+wp plugin update	--all
+wp core download	--path=/var/www/wordpress
+wp core install		--allow-root \
+					--path=/var/www/wordpress \
+					--url=$DOMAIN_NAME \
+					--admin_user=$MYSQL_USER \
+					--admin_password=$MYSQL_PASSWORD \
+
+wp user create	--allow-root \
+					--path=/var/www/wordpress \
 					--dbname=$MYSQL_DATABASE \
 					--dbuser=$MYSQL_USER \
 					--dbpass=$MYSQL_PASSWORD \
 					--dbhost=mariadb:3306 \
-					--path='wordpress'
-wp db create
-wp core install		--url=wordpress \
-					--title="wordpress" \
-					--admin_user=twang \
-					--admin_password=twang \
-					--admin_email=twang@student.42lyon.fr
 
-wp plugin update	--all
+
+cp conf/wordpress.conf /etc/php/8.2/fpm/pool.d/www.conf
+service php8.3-fpm start
+service php8.3-fpm stop
+php-fpm8.3 -F -R
