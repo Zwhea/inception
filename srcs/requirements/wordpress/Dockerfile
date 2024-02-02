@@ -1,8 +1,8 @@
-#---- os -----------------------------------------------------------------------#
+#---- os ----------------------------------------------------------------------#
 
 FROM		debian:bookworm
 
-#---- installation basics ------------------------------------------------------#
+#---- installation basics -----------------------------------------------------#
 
 RUN			apt-get update -y && \
 			apt-get upgrade -y && \
@@ -12,8 +12,9 @@ RUN			apt-get update -y && \
 			php-mysql \
 			mariadb-client
 
-#---- script config ------------------------------------------------------------#
+#---- script config -----------------------------------------------------------#
 
+COPY		conf/wordpress.conf /etc/wordpress/wordpress.conf
 COPY		tools/script.sh /etc/wordpress/script.sh
 RUN			chmod +x /etc/wordpress/script.sh
-ENTRYPOINT	[ "sh", "etc/wordpress/script.sh" ]
+ENTRYPOINT	[ "sh", "/etc/wordpress/script.sh" ]

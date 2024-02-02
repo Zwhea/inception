@@ -13,7 +13,7 @@ wp core install		--allow-root \
 					--admin_user=$MYSQL_USER \
 					--admin_password=$MYSQL_PASSWORD \
 
-wp user create	--allow-root \
+wp user create		--allow-root \
 					--path=/var/www/wordpress \
 					--dbname=$MYSQL_DATABASE \
 					--dbuser=$MYSQL_USER \
@@ -21,7 +21,7 @@ wp user create	--allow-root \
 					--dbhost=mariadb:3306 \
 
 
-cp conf/wordpress.conf /etc/php/8.2/fpm/pool.d/www.conf
-service php8.3-fpm start
-service php8.3-fpm stop
-php-fpm8.3 -F -R
+cp /etc/wordpress/wordpress.conf /etc/php/8.2/fpm/pool.d/www.conf
+service php-fpm start
+service php-fpm stop
+php-fpm -F -R

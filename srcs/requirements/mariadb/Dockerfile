@@ -11,9 +11,12 @@ RUN         apt-get update -y && \
 #---- stockage config ---------------------------------------------------------#
 
 COPY        conf/mariadb.conf /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY        tools/script.sh /etc/mysql/script.sh
 
 #---- script config -----------------------------------------------------------#
 
+COPY        tools/script.sh /etc/mysql/script.sh
 RUN         chmod +x /etc/mysql/script.sh
+
+#---- container launch --------------------------------------------------------#
+
 ENTRYPOINT  [ "sh", "etc/mysql/script.sh" ]
