@@ -1,20 +1,22 @@
-#---- os ----------------------------------------------------------------------#
+#---- os --------------------------------------------------------------#
 
-FROM		debian:bookworm
+FROM		debian:11
 
-#---- installation basics -----------------------------------------------------#
+#---- installation basics ---------------------------------------------#
 
 RUN			apt-get update -y && \
 			apt-get upgrade -y && \
 			apt-get install wget -y && \
-			apt-get install php8.2 -y \
+			apt-get install -y \
 			php-fpm \
 			php-mysql \
 			mariadb-client
 
-#---- script config -----------------------------------------------------------#
+#---- script config ---------------------------------------------------#
 
 COPY		conf/wordpress.conf /etc/wordpress/wordpress.conf
-COPY		tools/script.sh /etc/wordpress/script.sh
-RUN			chmod +x /etc/wordpress/script.sh
+COPY		--chmod=755 tools/script.sh /etc/wordpress/script.sh
+
+#---- wordpress launch ------------------------------------------------#
+
 ENTRYPOINT	[ "sh", "/etc/wordpress/script.sh" ]

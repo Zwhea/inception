@@ -1,22 +1,33 @@
-#---- os ----------------------------------------------------------------------#
+#---- base image ------------------------------------------------------#
 
-FROM        debian:bookworm
+FROM    debian:11
 
-#---- installation basics -----------------------------------------------------#
+ARG     MYSQL_DATABASE
+ARG     MYSQL_USER
+ARG     MYSQL_PASSWORD
+ARG     MYSQL_ROOT_PASSWORD
 
-RUN         apt-get update -y && \
-            apt-get upgrade -y && \
-            apt-get install mariadb-server -y
+RUN     export MYSQL_DATABASE=MYSQL_DATABASE
+RUN     export MYSQL_USER=MYSQL_USER
+RUN     export MYSQL_PASSWORD=MYSQL_PASSWORD
+RUN     export MYSQL_ROOT_PASSWORD=MYSQL_ROOT_PASSWORD
 
-#---- stockage config ---------------------------------------------------------#
 
-COPY        conf/mariadb.conf /etc/mysql/mariadb.conf.d/50-server.cnf
+#---- dependencies & requirements -------------------------------------#
 
-#---- script config -----------------------------------------------------------#
+RUN     apt-get update -y && \
+        apt-get upgrade -y && \
+        apt-get install mariadb-server -y
 
-COPY        tools/script.sh /etc/mysql/script.sh
-RUN         chmod +x /etc/mysql/script.sh
+#---- database config -------------------------------------------------#
 
-#---- container launch --------------------------------------------------------#
+COPY    conf/mariadb.conf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY    --chmod=755 tools/script.sh /etc/mysql/script.sh
 
-ENTRYPOINT  [ "sh", "etc/mysql/script.sh" ]
+#---- ports -----------------------------------------------------------#
+
+EXPOSE  3306
+
+#---- launch ----------------------------------------------------------#
+
+ENTRYPOINT  ["sh", "etc/mysql/script.sh"]
