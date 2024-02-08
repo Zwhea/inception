@@ -53,6 +53,7 @@ down:
 					- all dangling images \
 					- unused build cache
 prune:
+	docker stop $$(docker ps -qa)
 	docker system prune -a --force
 
 #---- clean -----------------------------------------------------------#
@@ -68,4 +69,4 @@ re: down up
 
 #---- phony -----------------------------------------------------------#
 
-.PHONY: all up debug down prune clean re volumes
+.PHONY: all up build volumes debug down prune clean re

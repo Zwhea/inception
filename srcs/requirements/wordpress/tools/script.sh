@@ -1,7 +1,7 @@
 if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 
     wp core download    --path=/var/www/wordpress \
-                        --allow-root 
+                        --allow-root
 
     wp config create    --allow-root \
                         --dbname=$MYSQL_DATABASE \
@@ -15,7 +15,7 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
                         --admin_user=$MYSQL_USER \
                         --admin_password=$MYSQL_PASSWORD \
                         --admin_email=$USER_MAIL \
-                        --title=twang \
+                        --title=Inception \
                         --path=/var/www/wordpress
 
     wp user create      $USER \
