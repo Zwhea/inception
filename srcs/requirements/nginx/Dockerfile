@@ -2,6 +2,8 @@
 
 FROM    debian:11
 
+ARG     DOMAIN_NAME
+
 #---- dependencies & requirements -------------------------------------#
 
 RUN     apt-get update -y && \
@@ -10,7 +12,7 @@ RUN     apt-get update -y && \
 
 #---- webserver config ------------------------------------------------#
 
-COPY    /conf/nginx.conf /usr/local/nginx/conf/
+COPY    /conf/nginx.conf /etc/nginx/
 
 #---- TSL/SSL certification -------------------------------------------#
 
@@ -23,7 +25,10 @@ RUN     mkdir -p /etc/nginx/ssl && \
 
 #---- nginx  ----------------------------------------------------------#
 
-RUN     mkdir -p /run/nginx
+RUN     mkdir -p /var/run/nginx
+RUN     chmod 755 /var/www/html
+RUN     chown -R www-data:www-data /var/www/html
+RUN     export DOMAIN_NAME=$DOMAIN_NAME
 
 #---- allowed ports ---------------------------------------------------#
 

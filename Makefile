@@ -10,6 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
+include srcs/.env
+
 #---- variables -------------------------------------------------------#
 
 ENV_FILE	= srcs/.env
@@ -20,15 +22,19 @@ COMPOSE		= docker compose -f
 
 .DEFAULT: all
 
-all: debug
+all: volumes debug
 
-up:
+up: volumes
 	$(COMPOSE) $(DOCKER_FILE) up -d --build
+
+volumes:
+	mkdir -p $(WP_VOLUME_PATH)
+	mkdir -p $(MARIADB_VOLUME_PATH)
 
 #---- debug -----------------------------------------------------------#
 # Removing the -d flag allows us to see the output of the containers.
 
-debug:
+debug: volumes
 	$(COMPOSE) $(DOCKER_FILE) up --build
 
 #---- down ------------------------------------------------------------#
@@ -52,4 +58,4 @@ re: down up
 
 #---- phony -----------------------------------------------------------#
 
-.PHONY: all up debug down prune clean re
+.PHONY: all up debug down prune clean re volumes
