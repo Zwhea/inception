@@ -6,11 +6,13 @@
 #    By: twang <twang@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/02 20:24:37 by wangthea          #+#    #+#              #
-#    Updated: 2024/02/06 15:17:01 by twang            ###   ########.fr        #
+#    Updated: 2024/02/08 10:32:15 by twang            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 include srcs/.env
+
+.SILENT:
 
 #---- variables -------------------------------------------------------#
 
@@ -47,12 +49,13 @@ down:
 					- all dangling images \
 					- unused build cache
 prune:
-	docker system prune -a
+	docker system prune -a --force
 
 #---- clean -----------------------------------------------------------#
 
 clean: down
-	$(COMPOSE) -f $(DOCKER_FILE) down --volumes --rmi all
+	$(COMPOSE) $(DOCKER_FILE) down --volumes --rmi all
+	docker system prune -a --force
 
 re: down up
 
