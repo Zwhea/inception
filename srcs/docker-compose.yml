@@ -39,6 +39,7 @@ services:
         restart: on-failure
         ports:
             - "443:443"
+            - "80:80"
 
     wordpress:
         container_name: wordpress

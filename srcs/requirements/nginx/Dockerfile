@@ -2,7 +2,11 @@
 
 FROM    debian:11
 
+#---- variables -------------------------------------------------------#
+
 ARG     DOMAIN_NAME
+
+RUN     export DOMAIN_NAME=DOMAIN_NAME
 
 #---- dependencies & requirements -------------------------------------#
 
@@ -32,6 +36,7 @@ RUN     export DOMAIN_NAME=$DOMAIN_NAME
 
 #---- allowed ports ---------------------------------------------------#
 
+EXPOSE  80
 EXPOSE  443
 
 #---- launch nginx ----------------------------------------------------#

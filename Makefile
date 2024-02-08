@@ -12,7 +12,7 @@
 
 include srcs/.env
 
-.SILENT:
+# .SILENT:
 
 #---- variables -------------------------------------------------------#
 
@@ -24,10 +24,14 @@ COMPOSE		= docker compose -f
 
 .DEFAULT: all
 
-all: volumes debug
+all: volumes
+	$(COMPOSE) $(DOCKER_FILE) up -d --build
 
 up: volumes
-	$(COMPOSE) $(DOCKER_FILE) up -d --build
+	$(COMPOSE) $(DOCKER_FILE) up -d
+
+build: volumes
+	$(COMPOSE) $(DOCKER_FILE) build
 
 volumes:
 	mkdir -p $(WP_VOLUME_PATH)
@@ -54,8 +58,11 @@ prune:
 #---- clean -----------------------------------------------------------#
 
 clean: down
+# docker stop $(docker ps -qa)
+# docker system prune -a --force
 	$(COMPOSE) $(DOCKER_FILE) down --volumes --rmi all
-	docker system prune -a --force
+	rm -rf $(WP_VOLUME_PATH)
+	rm -rf $(MARIADB_VOLUME_PATH)
 
 re: down up
 

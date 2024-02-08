@@ -14,7 +14,8 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
                         --url=$DOMAIN_NAME \
                         --admin_user=$MYSQL_USER \
                         --admin_password=$MYSQL_PASSWORD \
-                        --admin_email="${MYSQL_USER}@mail.com" \
+                        --admin_email=$USER_MAIL \
+                        --title=twang \
                         --path=/var/www/wordpress
 
     wp user create      $USER \
