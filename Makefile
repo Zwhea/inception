@@ -10,15 +10,18 @@
 #                                                                              #
 # **************************************************************************** #
 
-include srcs/.env
 
-# .SILENT:
+.SILENT:
 
 #---- variables -------------------------------------------------------#
 
-ENV_FILE	= srcs/.env
-DOCKER_FILE	= srcs/docker-compose.yml
+include srcs/.env
+
 COMPOSE		= docker compose -f
+# create the images from the dockerfiles \
+option -f allow specifying the path of the docker-compose file
+
+DOCKER_FILE	= srcs/docker-compose.yml
 
 #---- rules -----------------------------------------------------------#
 
