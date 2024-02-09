@@ -36,7 +36,6 @@ RUN     export DOMAIN_NAME=$DOMAIN_NAME
 
 #---- allowed ports ---------------------------------------------------#
 
-# EXPOSE  80
 EXPOSE  443
 
 #---- launch nginx ----------------------------------------------------#

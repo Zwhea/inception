@@ -37,6 +37,17 @@ volumes:
 	mkdir -p $(WP_VOLUME_PATH)
 	mkdir -p $(MARIADB_VOLUME_PATH)
 
+#---- exec & open container -------------------------------------------#
+
+nginx:
+	$(COMPOSE) $(DOCKER_FILE) exec nginx bash
+
+mariadb:
+	$(COMPOSE) $(DOCKER_FILE) exec mariadb bash
+
+wordpress:
+	$(COMPOSE) $(DOCKER_FILE) exec wordpress bash
+
 #---- debug -----------------------------------------------------------#
 # Removing the -d flag allows us to see the output of the containers.
 
@@ -53,8 +64,9 @@ down:
 					- all dangling images \
 					- unused build cache
 prune:
-	docker stop $$(docker ps -qa)
+	docker stop $$(docker ps -qa) || \
 	docker system prune -a --force
+	docker volume prune -a --force
 
 #---- clean -----------------------------------------------------------#
 
@@ -62,8 +74,7 @@ clean: down
 # docker stop $(docker ps -qa)
 # docker system prune -a --force
 	$(COMPOSE) $(DOCKER_FILE) down --volumes --rmi all
-	rm -rf $(WP_VOLUME_PATH)
-	rm -rf $(MARIADB_VOLUME_PATH)
+	rm -rf $(WP_VOLUME_PATH) $(MARIADB_VOLUME_PATH)
 
 re: down up
 

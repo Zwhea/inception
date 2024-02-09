@@ -35,7 +35,7 @@ services:
                 DOMAIN_NAME: $DOMAIN_NAME
         env_file: .env
         volumes:
-            - wordpress:/var/www/wordpress
+            - wordpress:/var/www/html
         restart: on-failure
         ports:
             - "443:443"
@@ -53,7 +53,7 @@ services:
             dockerfile: Dockerfile
         env_file: .env
         volumes:
-            - wordpress:/var/www/wordpress
+            - wordpress:/var/www/html
         restart: on-failure
         expose:
             - "9000"

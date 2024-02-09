@@ -1,6 +1,6 @@
-if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
+if [ ! -f "/var/www/html/wp-config.php" ]; then
 
-    wp core download    --path=/var/www/wordpress \
+    wp core download    --path=/var/www/html \
                         --allow-root
 
     wp config create    --allow-root \
@@ -8,7 +8,7 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
                         --dbuser=$MYSQL_USER \
                         --dbpass=$MYSQL_PASSWORD \
                         --dbhost=mariadb:3306 \
-                        --path=/var/www/wordpress
+                        --path=/var/www/html
 
     wp core install     --allow-root \
                         --url=$DOMAIN_NAME \
@@ -16,12 +16,12 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
                         --admin_password=$MYSQL_PASSWORD \
                         --admin_email=$USER_MAIL \
                         --title=Inception \
-                        --path=/var/www/wordpress
+                        --path=/var/www/html
 
     wp user create      $USER \
                         $USER_MAIL \
                         --allow-root \
-                        --path=/var/www/wordpress
+                        --path=/var/www/html
 
 fi
 
