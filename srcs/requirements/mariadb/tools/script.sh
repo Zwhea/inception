@@ -1,12 +1,12 @@
 
 service mariadb start
 
-mysql -u root -p$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE}; \
-            CREATE USER IF NOT EXISTS ${MYSQL_USER}@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}'; \
-            GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO ${MYSQL_USER}@'%' IDENTIFIED BY '${MYSQL_PASSWORD}'; \
-            ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}'; \
+mysql -u root -p$ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS ${DATABASE}; \
+            CREATE USER IF NOT EXISTS ${ADMIN_USER}@'localhost' IDENTIFIED BY '${ADMIN_PASSWORD}'; \
+            GRANT ALL PRIVILEGES ON ${DATABASE}.* TO ${ADMIN_USER}@'%' IDENTIFIED BY '${ADMIN_PASSWORD}'; \
+            ALTER USER 'root'@'localhost' IDENTIFIED BY '${ROOT_PASSWORD}'; \
             FLUSH PRIVILEGES;"
 
-mysqladmin -u root -p$MYSQL_ROOT_PASSWORD shutdown
+mysqladmin -u root -p$ROOT_PASSWORD shutdown
 
 exec mysqld_safe

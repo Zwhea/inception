@@ -4,15 +4,15 @@ FROM    debian:11
 
 #---- env variables ---------------------------------------------------#
 
-ARG     MYSQL_DATABASE
-ARG     MYSQL_USER
-ARG     MYSQL_PASSWORD
-ARG     MYSQL_ROOT_PASSWORD
+ARG     DATABASE
+ARG     ADMIN_USER
+ARG     ADMIN_PASSWORD
+ARG     ROOT_PASSWORD
 
-RUN     export MYSQL_DATABASE=MYSQL_DATABASE && \
-        export MYSQL_USER=MYSQL_USER && \
-        export MYSQL_PASSWORD=MYSQL_PASSWORD && \
-        export MYSQL_ROOT_PASSWORD=MYSQL_ROOT_PASSWORD
+RUN     export DATABASE=DATABASE && \
+        export ADMIN_USER=ADMIN_USER && \
+        export ADMIN_PASSWORD=ADMIN_PASSWORD && \
+        export ROOT_PASSWORD=ROOT_PASSWORD
 
 
 #---- dependencies & requirements -------------------------------------#
@@ -25,10 +25,6 @@ RUN     apt-get update -y && \
 
 COPY    conf/mariadb.conf /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY    tools/script.sh /etc/mysql/script.sh
-
-#---- ports -----------------------------------------------------------#
-
-EXPOSE  3306
 
 #---- launch ----------------------------------------------------------#
 

@@ -4,16 +4,16 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
                         --allow-root
 
     wp config create    --allow-root \
-                        --dbname=$MYSQL_DATABASE \
-                        --dbuser=$MYSQL_USER \
-                        --dbpass=$MYSQL_PASSWORD \
+                        --dbname=$DATABASE \
+                        --dbuser=$ADMIN_USER \
+                        --dbpass=$ADMIN_PASSWORD \
                         --dbhost=mariadb:3306 \
                         --path=/var/www/html
 
     wp core install     --allow-root \
                         --url=$DOMAIN_NAME \
-                        --admin_user=$MYSQL_USER \
-                        --admin_password=$MYSQL_PASSWORD \
+                        --admin_user=$ADMIN_USER \
+                        --admin_password=$ADMIN_PASSWORD \
                         --admin_email=$USER_MAIL \
                         --title=Inception \
                         --path=/var/www/html

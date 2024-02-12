@@ -5,8 +5,7 @@ FROM    debian:11
 #---- variables -------------------------------------------------------#
 
 ARG     DOMAIN_NAME
-
-RUN     export DOMAIN_NAME=DOMAIN_NAME
+RUN     export DOMAIN_NAME=$DOMAIN_NAME
 
 #---- dependencies & requirements -------------------------------------#
 
@@ -29,14 +28,9 @@ RUN     mkdir -p /etc/nginx/ssl && \
 
 #---- nginx  ----------------------------------------------------------#
 
-RUN     mkdir -p /var/run/nginx
-RUN     chmod 755 /var/www/html
-RUN     chown -R www-data:www-data /var/www/html
-RUN     export DOMAIN_NAME=$DOMAIN_NAME
-
-#---- allowed ports ---------------------------------------------------#
-
-EXPOSE  443
+# RUN     mkdir -p /var/run/nginx
+# RUN     chmod 755 /var/www/html
+# RUN     chown -R www-data:www-data /var/www/html
 
 #---- launch nginx ----------------------------------------------------#
 

@@ -29,21 +29,30 @@ DOCKER_FILE	= srcs/docker-compose.yml
 
 all: volumes
 	$(COMPOSE) $(DOCKER_FILE) up -d --build
+# create the images from the dockerfiles, then create the containers from \
+the images, then start the containers.
 
 up: volumes
 	$(COMPOSE) $(DOCKER_FILE) up -d
+# create the containers from the images, then start the containers.
 
 build: volumes
 	$(COMPOSE) $(DOCKER_FILE) build
+# create the images from the dockerfiles
 
 volumes:
-	mkdir -p $(WP_VOLUME_PATH)
-	mkdir -p $(MARIADB_VOLUME_PATH)
+	mkdir -p $(WORDPRESS_VOLUME)
+	mkdir -p $(MARIADB_VOLUME)
 
-#---- exec & open container -------------------------------------------#
+#---- debug -----------------------------------------------------------#
+
+debug: volumes
+	$(COMPOSE) $(DOCKER_FILE) up --build
+# Removing the -d flag allows us to see the output of the containers.
 
 nginx:
 	$(COMPOSE) $(DOCKER_FILE) exec nginx bash
+# create nginx container then open it
 
 mariadb:
 	$(COMPOSE) $(DOCKER_FILE) exec mariadb bash
@@ -51,33 +60,32 @@ mariadb:
 wordpress:
 	$(COMPOSE) $(DOCKER_FILE) exec wordpress bash
 
-#---- debug -----------------------------------------------------------#
-# Removing the -d flag allows us to see the output of the containers.
-
-debug: volumes
-	$(COMPOSE) $(DOCKER_FILE) up --build
-
 #---- down ------------------------------------------------------------#
 
 down:
 	$(COMPOSE) $(DOCKER_FILE) down
 
-# This will remove:	- all stopped containers \
-					- all networks not used by at least one container \
-					- all dangling images \
-					- unused build cache
 prune:
 	docker stop $$(docker ps -qa) || \
 	docker system prune -a --force
 	docker volume prune -a --force
+# This will remove:	- all stopped containers \
+					- all networks not used by at least one container \
+					- all dangling images \
+					- unused build cache
 
 #---- clean -----------------------------------------------------------#
 
 clean: down
-# docker stop $(docker ps -qa)
-# docker system prune -a --force
 	$(COMPOSE) $(DOCKER_FILE) down --volumes --rmi all
-	rm -rf $(WP_VOLUME_PATH) $(MARIADB_VOLUME_PATH)
+	rm -rf $(WORDPRESS_VOLUME) $(MARIADB_VOLUME)
+
+fclean:
+	docker stop $$(docker ps -qa) || \
+	docker rm $$(docker ps -qa) || \
+	docker rmi -f $$(docker images -qa) || \
+	docker volume rm $$(docker volumes ls -q) || \
+	docker network rm $$(docker network ls -q) 2>/dev/null
 
 re: down up
 

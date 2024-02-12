@@ -15,7 +15,6 @@ RUN         apt-get update -y && \
 RUN         wget    https://github.com/wp-cli/wp-cli-bundle/releases/download/v2.7.0/wp-cli-2.7.0.phar && \
             chmod   +x wp-cli-2.7.0.phar && \
             mv      wp-cli-2.7.0.phar /usr/local/bin/wp
-# RUN         mkdir -p /etc/wordpress
 
 #---- script config ---------------------------------------------------#
 
