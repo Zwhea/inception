@@ -26,12 +26,6 @@ RUN     mkdir -p /etc/nginx/ssl && \
             -keyout /etc/nginx/ssl/inception.key                 \
             -subj "/C=FR/L=Lyon/CN=twang.42.fr"
 
-#---- nginx  ----------------------------------------------------------#
-
-# RUN     mkdir -p /var/run/nginx
-# RUN     chmod 755 /var/www/html
-# RUN     chown -R www-data:www-data /var/www/html
-
 #---- launch nginx ----------------------------------------------------#
 
 ENTRYPOINT  ["nginx", "-g", "daemon off;"]
