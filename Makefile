@@ -66,9 +66,9 @@ down:
 	$(COMPOSE) $(DOCKER_FILE) down
 
 prune:
-	docker stop $$(docker ps -qa) || \
-	docker system prune -a --force
-	docker volume prune -a --force
+	docker stop $$(docker ps -qa);
+	docker system prune -a --force;
+	docker volume prune -a --force;
 # This will remove:	- all stopped containers \
 					- all networks not used by at least one container \
 					- all dangling images \
@@ -81,10 +81,10 @@ clean: down
 	rm -rf $(WORDPRESS_VOLUME) $(MARIADB_VOLUME)
 
 fclean:
-	docker stop $$(docker ps -qa) || \
-	docker rm $$(docker ps -qa) || \
-	docker rmi -f $$(docker images -qa) || \
-	docker volume rm $$(docker volumes ls -q) || \
+	docker stop $$(docker ps -qa);
+	docker rm $$(docker ps -qa);
+	docker rmi -f $$(docker images -qa);
+	docker volume rm $$(docker volumes ls -q);
 	docker network rm $$(docker network ls -q) 2>/dev/null
 
 re: down up

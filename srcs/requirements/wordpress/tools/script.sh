@@ -14,12 +14,13 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
                         --url=$DOMAIN_NAME \
                         --admin_user=$ADMIN_USER \
                         --admin_password=$ADMIN_PASSWORD \
-                        --admin_email=$USER_MAIL \
+                        --admin_email=$ADMIN_MAIL \
                         --title=Inception \
                         --path=/var/www/html
 
     wp user create      $USER \
                         $USER_MAIL \
+                        --user_pass=$PASSWORD \
                         --allow-root \
                         --path=/var/www/html
 
